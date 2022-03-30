@@ -26,13 +26,14 @@ $  pip install virtualenv
 
 Create Virtual Environment
 
-For Windows
-```
-$  python -m venv myenv
-```
-For Linux/Mac OS
+
+For Windows/Linux/Mac OS
 ```
 $  python3 -m venv myenv
+```
+or
+```
+$  virtualenv myenv
 ```
 
 Activate Virtual Environment
