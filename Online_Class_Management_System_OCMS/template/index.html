@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if messages %}
+<div class="alert alert-primary alert-dismissible fade show" role="alert">
+  {% for message in messages %}
+  <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+  {% endfor %}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endif %}
+
+<div class="banner">
+  <img src="{% static 'images/homepageimg.PNG' %}" alt="">
+</div>
+
+
+
+<div class="use-content">
+  <h1>Our Services</h1>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="box">
+        <div class="imgBx">
+          <img src="{% static 'images/teachers.PNG' %}" alt="">
+        </div>
+        <div class="content">
+          <h3>Teacher Portal</h3>
+          <ol>
+            <li>Add student one by one in their class through Add Student option.</li>
+            <li>Give or edit marks of the students.</li>
+            <li>write notice for all students.</li>
+            <li>Upload assignments and set the deadlines.</li>
+            <li>Check the assignments submitted by students.</li>
+            <li>See the messages in the inbox.</li>
+            <li>Schedule live classes.</li>
+            <li>Add profile picture through edit profile option.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <div class="box">
+        <div class="imgBx">
+          <img src="{% static 'images/student.PNG' %}" alt="">
+        </div>
+        <div class="content">
+          <h3>Student Portal</h3>
+          <ol>
+            <li>Login in the portal and keep themselves updated of all the activities going on in the class.</li>
+            <li>See the notice given by their teacher in the Class Notice option.</li>
+            <li>Submit the assignment. Once the assignment is submitted, it can't be changed later.</li>
+            <li>Contact any teacher through message option in All Teachers List. </li>
+            <li>Check their marks in the Marks option.</li>
+            <li>Add profile pic through edit profile option.</li>
+            <li>Attend live classes.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="about">
+  <h1>About Us</h1>
+  <p>KGP LEARNINGS is an environment created through the use of a learning management system that allows students and
+    teachers to connect either synchronously (real-time, with teacher and students meeting at the same time) or
+    asynchronously (interaction between teacher and students occurring intermittently with a time delay). Teacher and
+    students are generally separated by location.</p>
+</div>
+<div class="research">
+  <div class="row">
+    <div class="col-md-4">
+      <img src="{% static 'images/E-Learnings.PNG' %}" alt="">
+    </div>
+    <div class="col-md-8">
+      <div class="digital-content">
+        <h1>Why is digital learning important?</h1>
+        <br>
+        <p>Digital tools and platforms are becoming increasingly important in our personal and professional life.
+          Digital learning expands access to education and information while equipping students with a mentality and
+          talents that position them for success today and in the future.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="social">
+  <h1>Are you ready to push the boundaries of what is possible in education?</h1>
+  <h2>IIT KHARAGPUR</h2>
+  <a class="social-icon" href="https://www.facebook.com/iitkgp.cse/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+  <a class="social-icon"
+    href="https://www.linkedin.com/school/indian-institute-of-technology-kharagpur/?originalSubdomain=in" target="_blank"><i
+      class="fab fa-linkedin-in"></i></a>
+  <a class="social-icon" href="https://instagram.com/iit.kgp" target="_blank"><i class="fab fa-instagram"></i></a>
+  <a class="social-icon" href="https://twitter.com/IITKgp" target="_blank"><i class="fab fa-twitter"></i></a>
+
+
+</div>
+
+{% endblock %}
