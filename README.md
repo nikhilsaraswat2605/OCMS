@@ -30,7 +30,7 @@ For Windows
 ```
 $  python -m venv venv
 ```
-For Linux
+For Linux/Mac OS
 ```
 $  python3 -m venv venv
 ```
@@ -42,7 +42,7 @@ For Windows
 $  source venv/scripts/activate
 ```
 
-For Linux
+For Linux/Mac OS
 ```
 $  source venv/bin/activate
 ```
@@ -61,10 +61,12 @@ Command for PC:
 $ python manage.py runserver
 ```
 
-Command for Linux:
+Command for Linux/Mac OS:
 ```python
 $ python3 manage.py runserver
 ```
+
+Note:- While running the server, if any module causes some problem (as such possibility is very less), then manually first unistall that particular module and then reinstall it using -  ***pip install {module name}***
 
 **5. Login Credentials**
 
@@ -76,7 +78,10 @@ Then Add Email, Username and Password
 
 **or Use Default Credentials**
 
-*For HOD /SuperAdmin*
+*For HOD / SuperAdmin*
+
+For Example:
+
 Email: admin@gmail.com
 Password: admin
 
