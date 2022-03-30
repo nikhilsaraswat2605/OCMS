@@ -28,23 +28,23 @@ Create Virtual Environment
 
 For Windows
 ```
-$  python -m venv venv
+$  python -m venv myenv
 ```
 For Linux/Mac OS
 ```
-$  python3 -m venv venv
+$  python3 -m venv myenv
 ```
 
 Activate Virtual Environment
 
 For Windows
 ```
-$  source venv/scripts/activate
+$  source myenv/scripts/activate
 ```
 
 For Linux/Mac OS
 ```
-$  source venv/bin/activate
+$  source myenv/bin/activate
 ```
 
 
@@ -56,12 +56,8 @@ $  pip install -r requirements.txt
 
 **4. Now Run Server**
 
-Command for PC:
-```python
-$ python manage.py runserver
-```
 
-Command for Linux/Mac OS:
+Command for Windows/Linux/Mac OS:
 ```python
 $ python3 manage.py runserver
 ```
@@ -74,14 +70,20 @@ Create Super User (HOD)
 ```
 $  python manage.py createsuperuser
 ```
-Then Add Email, Username and Password
+Then Add Username and Password
 
-**or Use Default Credentials**
 
-*For HOD / SuperAdmin*
+*For HOD / SuperAdmin:*
 
 For Example:
 
-Email: admin@gmail.com
+Username: admin@gmail.com
 Password: admin
 
+*For Teacher / Professor:*
+
+Go on Teacher signup page and create account and login
+
+*For Student:*
+
+Go on Teacher signup page and create account and login
