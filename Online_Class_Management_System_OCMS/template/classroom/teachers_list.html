@@ -1,0 +1,38 @@
+{% extends "classroom/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="student-list">
+  <div class="container">
+    <form method='GET' action="{% url 'classroom:teachers_list' %}">
+      <p><input type='search' name='q' placeholder='Search Teacher'></p>
+    </form>
+    <div class="row">
+      {% for teacher in teachers_list %}
+      <div class="col-6 col-md-4">
+        <div class="student-box">
+          <div class="imgBx">
+            {% if teacher.teacher_profile_pic %}
+            <img src="{{ teacher.teacher_profile_pic.url }}" alt="Image not found">
+            {% else %}
+            <img src="{% static 'images/login-avatar.PNG' %}" alt="Image not found">
+            {% endif %}
+          </div>
+          <div class="content">
+            <h3>{{ teacher.name }}</h3>
+            <p><i class="far fa-user"></i> Username: {{ teacher.user.username }}</p>
+            <p><i class="fas fa-books"></i> Subject Name: {{ teacher.subject_name }}</p>
+            <p><i class="far fa-phone"></i> Phone: {{ teacher.phone }}</p>
+            <p><i class="far fa-envelope-open-text"></i> Email ID: {{ teacher.email }}</p>
+            <a href="{% url 'classroom:write_message' pk=teacher.pk %}">
+              <p class="add-button">Message</p>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'classroom/base.html' %}
+{% block content %}
+
+{% if messages %}
+<div class="alert alert-primary alert-dismissible fade show" role="alert">
+  {% for message in messages %}
+  <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+  {% endfor %}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endif %}
+
+<div class="container">
+  <div class="jumbotron">
+    {% if teacher.teacher_ClassTest.count == 0 %}
+    <h2>No Tests Yet</h2>
+    {% else %}
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Test Name</th>
+          <th scope="col">Start At</th>
+          <th scope="col">End At </th>
+          <th scope="col">Test Link</th>
+          {% comment %} <th scope="col">Update</th>{% endcomment %}
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for test in teacher.teacher_ClassTest.all %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ test.TestName }}</td>
+          <td>{{ test.StartTime }}</td>
+          <td>{{ test.EndTime }}</td>
+          <td><a href="{{ test.Testlink }}" target="_blank" class="btn btn-primary">Link</a></td>
+          {% comment %} <td><a href="{% url 'classroom:update_assignment' id=assignment.id %}"
+              class="btn btn-primary">Update</a></td>{% endcomment %}
+          <td><a href="{% url 'classroom:classTest_delete' id=test.id %}" class="btn btn-danger">Delete</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

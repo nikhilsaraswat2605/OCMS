@@ -1,0 +1,44 @@
+{% extends 'classroom/base.html' %}
+{% block content %}
+
+<div class="container">
+  <div class="jumbotron">
+
+    {% if student.student_liveClass.count == 0 %}
+    <h2>No classes Yet</h2>
+    {% else %}
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">class Name</th>
+          <th scope="col">Scheduled By</th>
+          <th scope="col">Start Time At</th>
+          <th scope="col">End Time</th>
+          <th scope="col">Class Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for class in student.student_liveClass.all %}
+        {% comment %} {% if PublishedAt|date:"YmdHis" < now|date:"YmdHis" %}<td>{{ class.teacher }}</td>{% endif %}
+          {% endcomment %}
+          {% comment %} {% if class.EndTime.date >= currentDateTime.date and class.EndTime.time
+          >=currentDateTime.time %} {% endcomment %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ class.ClassName }}</td>
+            <td>{{ class.teacher }}</td>
+            {% comment %} <td>{{ class.created_at }}</td> {% endcomment %}
+            <td>{{ class.StartTime }}</td>
+            <td>{{ class.EndTime }}</td>
+            <td><a href="{{ class.Classlink }}" target="_blank"class="btn btn-primary" target="_blank">Link</a></td>
+          </tr>
+          {% comment %} {%else%} {% endcomment %}
+          {% comment %} {% endif %} {% endcomment %}
+          {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
