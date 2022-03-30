@@ -112,6 +112,7 @@ def SignUp(request):
 @login_required
 def user_logout(request):
     logout(request)
+    messages.success(request, 'Logged out successfully!')
     return HttpResponseRedirect(reverse('home'))
 
 
@@ -125,6 +126,7 @@ def user_login(request):
     if user := authenticate(username=username, password=password):
         if user.is_active:
             login(request, user)
+            messages.success(request, 'Logged in successfully!')
             return HttpResponseRedirect(reverse('home'))
 
         else:
@@ -683,6 +685,7 @@ def submit_assignment(request, id=None):
             upload.student = student
             upload.submitted_assignment = assignment
             upload.save()
+            messages.success(request, "Congratulations, Assignment submitted successfully!")
             return redirect('classroom:class_assignment')
     return render(request, 'submit_assignment.html', {'form': form, 'DeadlineExceeded': DeadlineExceeded})
 
@@ -707,6 +710,7 @@ def change_password(request):
     else:
         form = PasswordChangeForm(data=request.POST, user=request.user)
         if not form.is_valid():
+            messages.error(request, "Password not changed")
             return redirect('classroom:change_password')
         form.save()
         messages.success(request, "Password changed")
