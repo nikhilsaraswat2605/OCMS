@@ -1,3 +1,11 @@
+"""
+Group - 4
+1. Nikhil Saraswat (20CS10039)
+2. Amit Kumar (20CS30003)
+3. Mir Mohammad Wasif (20CS10035)
+"""
+
+
 import datetime
 from time import timezone
 from django.shortcuts import render, get_object_or_404, redirect
