@@ -21,24 +21,19 @@
       </thead>
       <tbody>
         {% for assignment in student.student_assignment.all %}
-        {% comment %} {% if PublishedAt|date:"YmdHis" < now|date:"YmdHis" %}<td>{{ assignment.teacher }}</td>{% endif %}
-          {% endcomment %}
-          {% if assignment.PublishedAt.date < currentDateTime.date and assignment.PublishedAt.time
-            <=currentDateTime.time %} <tr>
+
+          {% if assignment.PublishedAt.date <= currentDateTime.date and assignment.PublishedAt.time <= currentDateTime.time %} 
+          <tr>
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{ assignment.assignment_name }}</td>
             <td>{{ assignment.teacher }}</td>
-            {% comment %} <td>{{ assignment.created_at }}</td> {% endcomment %}
             <td>{{ assignment.PublishedAt }}</td>
             <td>{{ assignment.Deadline }}</td>
             <td><a href="{{ assignment.assignment.url }}" class="btn btn-primary" target="_blank">Download</a></td>
             {% if assignment in assignment_list %}
             <td>Submitted</td>
             {% else %}
-            {% comment %} {% if currentDateTime == assignment.Deadline %} {% endcomment %}
-            <td><a href="{% url 'classroom:submit_assignment' id=assignment.id %}" class="btn btn-primary">Submit</a>
-            </td>
-            {% comment %} {% endif %} {% endcomment %}
+            <td><a href="{% url 'classroom:submit_assignment' id=assignment.id %}" class="btn btn-primary">Submit</a></td>
             {% endif %}
             </tr>
             {% endif %}

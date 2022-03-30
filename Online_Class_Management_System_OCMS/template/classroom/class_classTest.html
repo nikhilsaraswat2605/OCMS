@@ -22,8 +22,7 @@
         {% for test in student.student_ClassTest.all %}
         {% comment %} {% if PublishedAt|date:"YmdHis" < now|date:"YmdHis" %}<td>{{ class.teacher }}</td>{% endif %}
           {% endcomment %}
-          {% comment %} {% if class.EndTime.date >= currentDateTime.date and class.EndTime.time
-          >=currentDateTime.time %} {% endcomment %}
+           {% comment %} {% if test.StartTime.date <= currentDateTime.date and test.StartTime.time <= currentDateTime.time %}  {% endcomment %}
           <tr>
             <th scope="row">{{ forloop.counter }}</th>
             <td>{{ test.TestName }}</td>
@@ -33,7 +32,7 @@
             <td>{{ test.EndTime }}</td>
             <td><a href="{{ test.Testlink }}" target="_blank"class="btn btn-primary">Link</a></td>
           </tr>
-          {% comment %} {%else%} {% endcomment %}
+
           {% comment %} {% endif %} {% endcomment %}
           {% endfor %}
       </tbody>
