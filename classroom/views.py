@@ -28,6 +28,46 @@ from django.contrib.auth.forms import PasswordChangeForm
 from . import liveclass
 
 
+# Sign Up page which will ask whether you are teacher or student.
+def SignUp(request):
+    return render(request, 'signup.html', {})
+
+# TODO Rename this here and in `StudentSignUp`
+def _extracted_from_StudentSignUp_11(user_form, student_profile_form):
+    user = user_form.save()
+    user.is_student = True
+    user.save()
+
+    profile = student_profile_form.save(commit=False)
+    profile.user = user
+    profile.save()
+
+    return True
+
+# For Student Sign Up
+def StudentSignUp(request):
+    user_type = 'student'
+    registered = False
+
+    if request.method == "POST":
+        user_form = UserForm(data=request.POST)
+        student_profile_form = StudentProfileForm(data=request.POST)
+
+        if user_form.is_valid() and student_profile_form.is_valid():
+        
+            registered = _extracted_from_StudentSignUp_11(
+                user_form, student_profile_form)
+        else:
+            print(user_form.errors, student_profile_form.errors)
+    else:
+        user_form = UserForm()
+        student_profile_form = StudentProfileForm()
+    template = "student_signup.html"
+    context = {'user_form': user_form, 'student_profile_form': student_profile_form,
+               'registered': registered, 'user_type': user_type}
+    return render(request, template, context)
+
+
 # TODO Rename this here and in `TeacherSignUp`
 def _extracted_from_TeacherSignUp_11(user_form, teacher_profile_form):
     user = user_form.save()
@@ -51,7 +91,7 @@ def TeacherSignUp(request):
         teacher_profile_form = TeacherProfileForm(data=request.POST)
 
         if user_form.is_valid() and teacher_profile_form.is_valid():
-
+            
             registered = _extracted_from_TeacherSignUp_11(
                 user_form, teacher_profile_form)
         else:
@@ -64,56 +104,6 @@ def TeacherSignUp(request):
                'registered': registered, 'user_type': user_type}
     template = "teacher_signup.html"
     return render(request, template, context)
-
-
-# TODO Rename this here and in `StudentSignUp`
-def _extracted_from_StudentSignUp_11(user_form, student_profile_form):
-    user = user_form.save()
-    user.is_student = True
-    user.save()
-
-    profile = student_profile_form.save(commit=False)
-    profile.user = user
-    profile.save()
-
-    return True
-
-
-# For Student Sign Up
-def StudentSignUp(request):
-    user_type = 'student'
-    registered = False
-
-    if request.method == "POST":
-        user_form = UserForm(data=request.POST)
-        student_profile_form = StudentProfileForm(data=request.POST)
-
-        if user_form.is_valid() and student_profile_form.is_valid():
-
-            registered = _extracted_from_StudentSignUp_11(
-                user_form, student_profile_form)
-        else:
-            print(user_form.errors, student_profile_form.errors)
-    else:
-        user_form = UserForm()
-        student_profile_form = StudentProfileForm()
-    template = "student_signup.html"
-    context = {'user_form': user_form, 'student_profile_form': student_profile_form,
-               'registered': registered, 'user_type': user_type}
-    return render(request, template, context)
-
-
-# Sign Up page which will ask whether you are teacher or student.
-def SignUp(request):
-    return render(request, 'signup.html', {})
-
-
-# logout view.
-@login_required
-def user_logout(request):
-    logout(request)
-    messages.success(request, 'Logged out successfully!')
-    return HttpResponseRedirect(reverse('home'))
 
 
 # login view.
@@ -135,6 +125,14 @@ def user_login(request):
     else:
         messages.error(request, "Invalid Details")
         return redirect('classroom:login')
+
+
+# logout view.
+@login_required
+def user_logout(request):
+    logout(request)
+    messages.success(request, 'Logged out successfully!')
+    return HttpResponseRedirect(reverse('home'))
 
 
 # User Profile of student.
@@ -219,6 +217,26 @@ class StudentAllMarksList(LoginRequiredMixin, DetailView):
     template_name = "student_allmarks_list.html"
     context_object_name = "student"
 
+# To add student in the class.
+class add_student(LoginRequiredMixin, generic.RedirectView):
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse('classroom:students_list')
+
+    def get(self, request, *args, **kwargs):
+        student = get_object_or_404(models.Student, pk=self.kwargs.get('pk'))
+
+        try:
+            StudentsInClass.objects.create(
+                teacher=self.request.user.Teacher, student=student)
+        except:
+            messages.warning(
+                self.request, 'warning, Student already in class!')
+        else:
+            messages.success(
+                self.request, f'{student.name} successfully added!')
+
+        return super().get(request, *args, **kwargs)
 
 # To give marks to a student.
 @login_required
@@ -331,28 +349,6 @@ def student_marks_list(request, pk):
     template = "student_marks_list.html"
     context = {'student': student, 'given_marks': given_marks}
     return render(request, template, context)
-
-
-# To add student in the class.
-class add_student(LoginRequiredMixin, generic.RedirectView):
-
-    def get_redirect_url(self, *args, **kwargs):
-        return reverse('classroom:students_list')
-
-    def get(self, request, *args, **kwargs):
-        student = get_object_or_404(models.Student, pk=self.kwargs.get('pk'))
-
-        try:
-            StudentsInClass.objects.create(
-                teacher=self.request.user.Teacher, student=student)
-        except:
-            messages.warning(
-                self.request, 'warning, Student already in class!')
-        else:
-            messages.success(
-                self.request, f'{student.name} successfully added!')
-
-        return super().get(request, *args, **kwargs)
 
 
 @login_required

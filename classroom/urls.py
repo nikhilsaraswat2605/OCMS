@@ -4,12 +4,14 @@ from classroom import views
 app_name = 'classroom'
 
 urlpatterns =[
+    path('login/',views.user_login,name="login"),
+    path('logout/',views.user_logout,name="logout"),
     path('signup/',views.SignUp,name="signup"),
     path('signup/student_signup/',views.StudentSignUp,name="StudentSignUp"),
     path('signup/teacher_signup/',views.TeacherSignUp,name="TeacherSignUp"),
+    path('change_password/',views.change_password,name="change_password"),
     path('submit_assignment/<int:id>/',views.submit_assignment,name="submit_assignment"),
     path('submit_list/',views.submit_list,name="submit_list"),
-    path('change_password/',views.change_password,name="change_password"),
     path('teacher/<int:pk>/',views.TeacherDetailView.as_view(),name="teacher_detail"),
     path('update/student/<int:pk>/',views.StudentUpdateView,name="student_update"),
     path('update/teacher/<int:pk>/',views.TeacherUpdateView,name="teacher_update"),
@@ -44,7 +46,5 @@ urlpatterns =[
     path('material_list/',views.material_list,name="material_list"),
     path('liveClass_list/',views.liveClass_list,name="liveClass_list"),
     path('classTest_delete/<int:id>/',views.classTest_delete,name="classTest_delete"),
-    path('login/',views.user_login,name="login"),
-    path('logout/',views.user_logout,name="logout"),
     path('student/<int:pk>/',views.StudentDetailView.as_view(),name="student_detail"),
 ]
